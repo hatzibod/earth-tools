@@ -1,8 +1,8 @@
 # Open decisions
 
-## Restic target on the Synology: rest-server vs SFTP (open, 2026-10-14)
+## Restic target on the Synology: rest-server vs SFTP (decided 2026-10-14: rest-server)
 
-**Proposed: rest-server in append-only mode.** Not decided yet.
+**Decided by Nikos 2026-10-14: rest-server in append-only mode** on both Synologys (D1 in `backup-plan.md`).
 
 For rest-server:
 - **Append-only** (`--append-only`): earth can add backups but not delete or change them. The README says it
@@ -22,12 +22,14 @@ Against it:
 
 For SFTP: needs no new service; DSM has it built in.
 
-Not yet checked: how the rest-server Docker image enables append-only, and the DSM setup for it.
+The Docker image takes extra flags in the `OPTIONS` environment variable, so append-only is
+`OPTIONS="--append-only"` (README, checked 2026-10-14). Not yet checked: the DSM setup for it.
+Further decisions for the full setup (two targets, prune host, TLS, retention): `docs/backup-plan.md`.
 
 Sources: [rest-server README](https://github.com/restic/rest-server),
 [restic docs: preparing a repository](https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html).
 
-## Backrest web UI on top of restic (TBD, 2026-10-14)
+## Backrest web UI on top of restic (decided 2026-10-14: later)
 
 Plain systemd timers work either way, and Backrest can be added later on the same repo. The homelab decision
 log already lists "Restic/Backrest" as the backup recommendation (`homelab/decisions.md`). Upstream's latest
